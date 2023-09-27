@@ -5,19 +5,27 @@ import (
 )
 
 type Icon struct {
+	ID    string
+	Title string
+	Icon  string
 	AuditInfo
 }
 
 type RequestCreateIcon struct {
-	ID string
+	Title string `json:"title"`
+	Icon  string `json:"icon"`
 }
 
 type RequestUpdateIcon struct {
-	ID string
+	ID    string `json:"id"`
+	Title string `json:"title"`
+	Icon  string `json:"icon"`
 }
 
 type ResponseIcon struct {
-	ID string
+	ID    string `json:"id"`
+	Title string `json:"title"`
+	Icon  string `json:"icon"`
 }
 
 type IconRepository interface {

@@ -37,6 +37,7 @@ type ResponsePayment struct {
 type PaymentRepository interface {
 	Create(ctx context.Context, payment *Payment) error
 	Update(ctx context.Context, payment *Payment) error
+	Delete(ctx context.Context, id string) error
 	GetAll(ctx context.Context) (*[]Payment, error)
 	GetByID(ctx context.Context, id string) (*Payment, error)
 	GetByName(ctx context.Context, name string) (*Payment, error)
@@ -46,4 +47,5 @@ type PaymentUsecase interface {
 	Create(ctx context.Context, req *RequestCreatePayment) (*ResponsePayment, error)
 	Update(ctx context.Context, req *RequestUpdatePayment) (*ResponsePayment, error)
 	GetAll(ctx context.Context) (*[]ResponsePayment, error)
+	Delete(ctx context.Context, id string) error
 }

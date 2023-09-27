@@ -114,3 +114,24 @@ func (h *PaymentHandlerImpl) GetAll(w http.ResponseWriter, r *http.Request) {
 
 	helper.SuccessResponseEncode(w, payments, "data payment")
 }
+
+func (h *PaymentHandlerImpl) Delete(w http.ResponseWriter, r *http.Request) {
+	id := chi.URLParam(r, "id")
+	if id == "" {
+		helper.ErrorResponseEncode(w, _error.HttpErrString(response.CodeCompanyName[response.CM01], response.CM01))
+		return
+	}
+
+	err := h.paymentUsecase.Delete(r.Context(), id)
+	if err != nil {
+		if errors.Is(err, _usecase.PaymentNotExist) {
+			helper.SuccessResponseEncode(w, nil, "delete payment berhasil, payment gak ada")
+			return
+		}
+
+		helper.ErrorResponseEncode(w, err)
+		return
+	}
+
+	helper.SuccessResponseEncode(w, nil, "delete payment berhasil")
+}

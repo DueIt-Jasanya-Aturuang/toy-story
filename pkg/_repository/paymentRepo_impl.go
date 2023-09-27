@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"errors"
+	"time"
 
 	"github.com/rs/zerolog/log"
 
@@ -98,6 +99,46 @@ func (p *PaymentRepositoryImpl) Update(ctx context.Context, payment *domain.Paym
 		payment.UpdatedAt,
 		payment.UpdatedBy,
 		payment.ID,
+	)
+	if err != nil {
+		log.Warn().Msgf(util.LogErrExecContext, err)
+		return err
+	}
+
+	return nil
+}
+
+func (p *PaymentRepositoryImpl) Delete(ctx context.Context, id string) error {
+	query := `UPDATE m_default_payment_method SET deleted_at = $1, deleted_by = $2
+            	WHERE id = $3 AND deleted_at IS NULL`
+
+	conn, err := p.db.Conn(ctx)
+	if err != nil {
+		log.Warn().Msgf(util.LogErrDBConn, err)
+		return err
+	}
+	defer func() {
+		if errClose := conn.Close(); errClose != nil {
+			log.Warn().Msgf(util.LogErrDBConnClose, errClose)
+		}
+	}()
+
+	stmt, err := conn.PrepareContext(ctx, query)
+	if err != nil {
+		log.Warn().Msgf(util.LogErrPrepareContext, err)
+		return err
+	}
+	defer func() {
+		if errClose := stmt.Close(); errClose != nil {
+			log.Warn().Msgf(util.LogErrPrepareContextClose, errClose)
+		}
+	}()
+
+	_, err = stmt.ExecContext(
+		ctx,
+		time.Now().Unix(),
+		"",
+		id,
 	)
 	if err != nil {
 		log.Warn().Msgf(util.LogErrExecContext, err)

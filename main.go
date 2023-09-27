@@ -39,6 +39,7 @@ func main() {
 		r.Get("/payment", paymentHandler.GetAll)
 		r.Post("/payment", paymentHandler.Create)
 		r.Put("/payment/{id}", paymentHandler.Update)
+		r.Delete("/payment/{id}", paymentHandler.Delete)
 	})
 
 	err := http.ListenAndServe(infra.AppAddr, r)

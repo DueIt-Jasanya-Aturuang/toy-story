@@ -123,3 +123,26 @@ func (p *PaymentUsecaseImpl) GetAll(ctx context.Context) (*[]domain.ResponsePaym
 
 	return &responses, nil
 }
+
+func (p *PaymentUsecaseImpl) Delete(ctx context.Context, id string) error {
+	payment, err := p.paymentRepo.GetByID(ctx, id)
+	if err != nil {
+		if !errors.Is(err, sql.ErrNoRows) {
+			return err
+		}
+		return PaymentNotExist
+	}
+
+	imageDelArr := strings.Split(payment.Image, "/")
+	imageDel := fmt.Sprintf("/%s/%s/%s", imageDelArr[2], imageDelArr[3], imageDelArr[4])
+	if err = p.minioRepo.DeleteFile(ctx, imageDel); err != nil {
+		return err
+	}
+
+	err = p.paymentRepo.Delete(ctx, id)
+	if err != nil {
+		return err
+	}
+	
+	return nil
+}
