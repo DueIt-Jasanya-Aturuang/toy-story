@@ -25,3 +25,18 @@ func (i *IconUsecaseImpl) Create(ctx context.Context, req *domain.RequestCreateI
 	// TODO implement me
 	panic("implement me")
 }
+
+func (i *IconUsecaseImpl) Update(ctx context.Context, req *domain.RequestUpdateIcon) (*domain.ResponseIcon, error) {
+	// TODO implement me
+	panic("implement me")
+}
+
+func (i *IconUsecaseImpl) GetAll(ctx context.Context) (*[]domain.ResponseIcon, error) {
+	// TODO implement me
+	panic("implement me")
+}
+
+func (i *IconUsecaseImpl) Delete(ctx context.Context, id string) error {
+	// TODO implement me
+	panic("implement me")
+}

@@ -30,8 +30,16 @@ type ResponseIcon struct {
 
 type IconRepository interface {
 	Create(ctx context.Context, payment *Icon) error
+	Update(ctx context.Context, payment *Icon) error
+	Delete(ctx context.Context, id string) error
+	GetAll(ctx context.Context) (*[]Icon, error)
+	GetByID(ctx context.Context, id string) (*Icon, error)
+	GetByTitle(ctx context.Context, title string) (*Icon, error)
 }
 
 type IconUsecase interface {
 	Create(ctx context.Context, req *RequestCreateIcon) (*ResponseIcon, error)
+	Update(ctx context.Context, req *RequestUpdateIcon) (*ResponseIcon, error)
+	GetAll(ctx context.Context) (*[]ResponseIcon, error)
+	Delete(ctx context.Context, id string) error
 }
