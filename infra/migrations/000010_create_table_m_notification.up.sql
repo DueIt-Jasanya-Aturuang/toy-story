@@ -1,4 +1,4 @@
-CREATE TABLE m_notificatio
+CREATE TABLE m_notification
 (
     id             VARCHAR(64) NOT NULL UNIQUE PRIMARY KEY,
     profile_id     VARCHAR(64),

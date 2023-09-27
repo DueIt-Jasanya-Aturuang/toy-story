@@ -18,17 +18,18 @@ func main() {
 	infra.InitLog()
 	db := infra.NewPostgresConnection()
 	minioC := infra.NewMinioClient()
-	//
+
 	minioRepo := _repository.NewMinioImpl(minioC)
-	// iconRepo := _repository.NewIconRepositoryImpl(db)
+	iconRepo := _repository.NewIconRepositoryImpl(db)
 	paymentRepo := _repository.NewPaymentRepositoryImpl(db)
 	// spendingTypeRepo := _repository.NewSpendingTypeRepository(db)
-	//
-	// iconUsecase := _usecase.NewIconUsecaseImpl(iconRepo, minioRepo)
+
+	iconUsecase := _usecase.NewIconUsecaseImpl(iconRepo, minioRepo)
 	paymentUsecase := _usecase.NewPaymentUsecaseImpl(paymentRepo, minioRepo)
 	// spendingTypeUsecase := _usecase.NewSpendingTypeUsecaseImpl(spendingTypeRepo)
 
 	paymentHandler := rest.NewPaymentHandlerImpl(paymentUsecase)
+	iconHandler := rest.NewIconHandlerImpl(iconUsecase)
 
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
@@ -40,6 +41,11 @@ func main() {
 		r.Post("/payment", paymentHandler.Create)
 		r.Put("/payment/{id}", paymentHandler.Update)
 		r.Delete("/payment/{id}", paymentHandler.Delete)
+
+		r.Get("/icon", iconHandler.GetAll)
+		r.Post("/icon", iconHandler.Create)
+		r.Put("/icon/{id}", iconHandler.Update)
+		r.Delete("/icon/{id}", iconHandler.Delete)
 	})
 
 	err := http.ListenAndServe(infra.AppAddr, r)

@@ -145,7 +145,7 @@ func (i *IconRepositoryImpl) Delete(ctx context.Context, id string) error {
 }
 
 func (i *IconRepositoryImpl) GetAll(ctx context.Context) (*[]domain.Icon, error) {
-	query := `SELECT id, title, icon, created_at, created_by, updated_at, updated_by, deleted_at, deleted_by 
+	query := `SELECT id, title, icon, created_at, created_by, updated_at, updated_by, deleted_at, deleted_by FROM m_icon
 				WHERE deleted_at IS NULL`
 
 	conn, err := i.db.Conn(ctx)
@@ -206,7 +206,7 @@ func (i *IconRepositoryImpl) GetAll(ctx context.Context) (*[]domain.Icon, error)
 }
 
 func (i *IconRepositoryImpl) GetByID(ctx context.Context, id string) (*domain.Icon, error) {
-	query := `SELECT id, title, icon, created_at, created_by, updated_at, updated_by, deleted_at, deleted_by 
+	query := `SELECT id, title, icon, created_at, created_by, updated_at, updated_by, deleted_at, deleted_by FROM m_icon
 				WHERE id = $1 AND deleted_at IS NULL`
 
 	conn, err := i.db.Conn(ctx)
@@ -253,7 +253,7 @@ func (i *IconRepositoryImpl) GetByID(ctx context.Context, id string) (*domain.Ic
 }
 
 func (i *IconRepositoryImpl) GetByTitle(ctx context.Context, title string) (*domain.Icon, error) {
-	query := `SELECT id, title, icon, created_at, created_by, updated_at, updated_by, deleted_at, deleted_by 
+	query := `SELECT id, title, icon, created_at, created_by, updated_at, updated_by, deleted_at, deleted_by FROM m_icon
 				WHERE title = $1 AND deleted_at IS NULL`
 
 	conn, err := i.db.Conn(ctx)

@@ -2,6 +2,7 @@ package domain
 
 import (
 	"context"
+	"mime/multipart"
 )
 
 type Icon struct {
@@ -12,14 +13,14 @@ type Icon struct {
 }
 
 type RequestCreateIcon struct {
-	Title string `json:"title"`
-	Icon  string `json:"icon"`
+	Title string                `form:"title"`
+	Icon  *multipart.FileHeader `form:"icon"`
 }
 
 type RequestUpdateIcon struct {
-	ID    string `json:"id"`
-	Title string `json:"title"`
-	Icon  string `json:"icon"`
+	ID    string
+	Title string                `form:"title"`
+	Icon  *multipart.FileHeader `form:"icon"`
 }
 
 type ResponseIcon struct {
