@@ -1,31 +1,70 @@
 package converter
 
 import (
+	"database/sql"
+	"time"
+
+	uuid "github.com/satori/go.uuid"
+
 	"github.com/DueIt-Jasanya-Aturuang/toy-story/domain"
+	"github.com/DueIt-Jasanya-Aturuang/toy-story/pkg/helper"
 )
 
-func RequestCreatePaymentToModel(req *domain.RequestCreatePayment) *domain.Payment {
-	return &domain.Payment{
+func RequestCreatePaymentToModel(req *domain.RequestCreatePayment, fileName string) *domain.Payment {
+	id := uuid.NewV4().String()
+	payment := &domain.Payment{
+		ID:          id,
+		Name:        req.Name,
+		Description: helper.NewNullString(req.Description),
+		Image:       fileName,
 		AuditInfo: domain.AuditInfo{
-			CreatedAt: 0,
+			CreatedAt: time.Now().Unix(),
 			CreatedBy: "",
-			UpdatedAt: 0,
+			UpdatedAt: time.Now().Unix(),
+			UpdatedBy: sql.NullString{},
+			DeletedAt: sql.NullInt64{},
+			DeletedBy: sql.NullString{},
 		},
 	}
+
+	return payment
 }
 
-func RequestUpdatePaymentToModel(req *domain.RequestUpdatePayment) *domain.Payment {
-	return &domain.Payment{
+func RequestUpdatePaymentToModel(req *domain.RequestUpdatePayment, fileName string) *domain.Payment {
+	payment := &domain.Payment{
+		ID:          req.ID,
+		Name:        req.Name,
+		Description: helper.NewNullString(req.Description),
+		Image:       fileName,
 		AuditInfo: domain.AuditInfo{
-			CreatedAt: 0,
-			CreatedBy: "",
-			UpdatedAt: 0,
+			UpdatedAt: time.Now().Unix(),
+			UpdatedBy: helper.NewNullString(""),
+			DeletedAt: sql.NullInt64{},
+			DeletedBy: sql.NullString{},
 		},
 	}
+
+	return payment
 }
 
-func PaymentModelToResp(i *domain.Payment) *domain.ResponsePayment {
-	return &domain.ResponsePayment{
-		ID: "",
+func PaymentModelToResp(payment *domain.Payment) *domain.ResponsePayment {
+	resp := &domain.ResponsePayment{
+		ID:          payment.ID,
+		Name:        payment.Name,
+		Description: helper.GetNullString(payment.Description),
+		Image:       payment.Image,
 	}
+
+	return resp
+}
+
+func PaymentGetAllPaymentModelToResp(payment domain.Payment) domain.ResponsePayment {
+	resp := domain.ResponsePayment{
+		ID:          payment.ID,
+		Name:        payment.Name,
+		Description: helper.GetNullString(payment.Description),
+		Image:       payment.Image,
+	}
+
+	return resp
 }
