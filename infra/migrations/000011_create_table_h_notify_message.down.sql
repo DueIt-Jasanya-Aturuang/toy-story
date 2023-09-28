@@ -1,1 +1,1 @@
-DROP TABLE IF EXISTS h_notify_message;
+-- DROP TABLE IF EXISTS h_notify_message;

@@ -1,1 +1,1 @@
-DROP TABLE IF EXISTS m_icon;
+-- DROP TABLE IF EXISTS m_icon;

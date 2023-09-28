@@ -1,1 +1,1 @@
-DROP TABLE IF EXISTS m_spending_type;
+-- DROP TABLE IF EXISTS m_spending_type;

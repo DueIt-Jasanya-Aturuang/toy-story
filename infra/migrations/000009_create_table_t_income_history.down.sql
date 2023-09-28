@@ -1,1 +1,1 @@
-DROP TABLE IF EXISTS t_income_history;
+-- DROP TABLE IF EXISTS t_income_history;
