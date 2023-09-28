@@ -18,7 +18,7 @@ migrate-down:
 
 # Perintah untuk memaksa migrasi ke versi tertentu
 migrate-force:
-	migrate -database $(DB_URL) -path $(MIGRATIONS_DIR) force 7
+	migrate -database $(DB_URL) -path $(MIGRATIONS_DIR) force 13
 
 # Perintah untuk membuat file migrasi baru
 create-migration:
