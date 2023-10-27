@@ -6,6 +6,7 @@ CREATE TABLE m_notification
     message        TEXT,
     title          VARCHAR(64),
     icon           VARCHAR(255),
+    status         VARCHAR(64),
     created_at     DECIMAL     NOT NULL,
     created_by     VARCHAR(64),
     updated_at     DECIMAL     NOT NULL,
@@ -18,7 +19,7 @@ CREATE TABLE m_notification
             on delete cascade
             on update cascade,
     constraint fk_m_user_config
-        foreign key (profile_id)
+        foreign key (user_config_id)
             references m_user_config (id)
             on delete cascade
             on update cascade
